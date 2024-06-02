@@ -1,0 +1,2 @@
+class NeronalNetwork:
+    pass
