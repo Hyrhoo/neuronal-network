@@ -6,7 +6,7 @@ def indently(x: float) -> float:
 def binaryStep(x: float) -> float:
     return 0.0 if x < 0 else 1
 
-def logistic(x: float) -> float:
+def sigmoid(x: float) -> float:
     return 1 / (1 + math.exp(-x))
 
 def tanh(x: float) -> float:
@@ -40,9 +40,10 @@ def silu(x: float) -> float:
 def gaussian(x: float) -> float:
     return math.exp(-x**2)
 
+def sigmoidRelu(x):
+    return sigmoid(relu(x))
 
-
-activationFunctions = [indently, binaryStep, logistic, tanh, smht, relu, gelu, softplus, selu, pRelu, silu, gaussian]
+activationFunctions = [indently, binaryStep, sigmoid, tanh, smht, relu, gelu, softplus, selu, pRelu, silu, gaussian, sigmoidRelu]
 
 
 
