@@ -1,12 +1,13 @@
 import activationFunctions as act
 import random
 import numpy as np
+from collections.abc import Iterable
 
 class NeuronalNetwork:
-    weightMin = -100
-    weightMax = 100
-    biasMin = -100
-    biasMax = 100
+    weightMin = -1
+    weightMax = 1
+    biasMin = -10
+    biasMax = 10
     
     def __init__(self, nbInput, nbOutput, outputFunction=act.sigmoidRelu) -> None:
         weight, bias = self.makeLayer(nbInput, nbOutput)
@@ -33,16 +34,26 @@ class NeuronalNetwork:
         return weight, bias
     
     def calcul(self, *inputs):
-        inputs = np.array(inputs).reshape(self.layers[0], 1)
+        if isinstance(inputs[0], Iterable):
+            inputs = np.array(inputs[0]).reshape(self.layers[0], 1)
+        else:
+            inputs = np.array(inputs).reshape(self.layers[0], 1)
         for i in range(self.nbLayer - 1):
-            layer = self.layers[i+1]
+            layerSize = self.layers[i+1]
             weight = self.weights[i]
             # print("weight :", weight)
             bias = self.biases[i]
             inputs = weight.dot(inputs)
             inputs = inputs + bias
             # print("inputs 1 :", inputs)
-            inputs = np.array(list(map(self.functions[i], inputs.reshape((layer,))))).reshape((layer, 1))
+            inputs = np.array(list(map(self.functions[i], inputs.reshape((layerSize,))))).reshape((layerSize, 1))
             # print("inputs 2 :", inputs)
         return inputs
+    
+    def save(self, file):
+        raise NotImplementedError()
+    
+    @staticmethod
+    def load(file):
+        raise NotImplementedError()
 

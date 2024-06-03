@@ -8,17 +8,23 @@ def binaryStep(x: float) -> float:
     return 0.0 if x <= 0 else 1
 
 def sigmoid(x: float) -> float:
-    return 1 / (1 + math.exp(-x))
+    try:
+        return 1 / (1 + math.exp(-x))
+    except:
+        return 0
 
 def tanh(x: float) -> float:
     try:
         return (math.exp(x) - math.exp(-x)) / (math.exp(x) + math.exp(-x))
     except:
-        return 1.0
+        return 1.0 if x >= 0 else -1.0
 
 def smht(x: float) -> float:
     a, b, c, d = 1, 2, 3, 4
-    return (math.exp(a*x) - math.exp(-b*x)) / (math.exp(c*x) + math.exp(-d*x))
+    try:
+        return (math.exp(a*x) - math.exp(-b*x)) / (math.exp(c*x) + math.exp(-d*x))
+    except:
+        return 0
 
 def relu(x: float) -> float:
     return max(0.0, x)
@@ -35,20 +41,29 @@ def softplus(x: float) -> float:
 def selu(x: float) -> float:
     a = 1.67326
     y = 1.0507
-    return y * (a * (math.exp(x) - 1) if x < 0 else x)    
+    try:
+        return y * (a * (math.exp(x) - 1) if x < 0 else x)    
+    except:
+        return y * x
 
 def pRelu(x: float) -> float:
     a = 0.1
     return a * x if x < 0 else x
 
 def silu(x: float) -> float:
-    return x / (1 + math.exp(-x))
+    try:
+        return x / (1 + math.exp(-x))
+    except:
+        return x if x >= 0 else 0
 
 def gaussian(x: float) -> float:
-    return math.exp(-x**2)
+    try:
+        return math.exp(-x**2)
+    except:
+        return 0
 
 def sigmoidRelu(x):
-    return sigmoid(relu(x))
+    return (sigmoid(relu(x)) - 0.5) * 2
 
 activationFunctions = [indently, binaryStep, sigmoid, tanh, smht, relu, gelu, softplus, selu, pRelu, silu, gaussian, sigmoidRelu]
 
@@ -58,7 +73,7 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from numpy import linspace, average
     for function in  activationFunctions:
-        inputs = linspace(-5, 1000, 10_000)
+        inputs = linspace(-10, 50, 10_000)
         outputs = list(map(function, inputs))
         plt.plot(inputs, outputs)
         plt.title(function.__name__)
