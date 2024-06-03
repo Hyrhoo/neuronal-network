@@ -72,7 +72,7 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from numpy import linspace, average
     for function in  activationFunctions:
-        inputs = linspace(-10, 50, 10_000)
+        inputs = linspace(-50, 50, 10_000)
         outputs = list(map(function, inputs))
         plt.plot(inputs, outputs)
         plt.title(function.__name__)

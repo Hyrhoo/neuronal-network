@@ -15,6 +15,7 @@ dans ce projet je fait un réseau de nerone que je vais ensuite essayer d'entrai
 - [x] fonction d'activation par layer
 - [ ] score réseau = sum tout les écart entre atendu et donner pour tout les entrés
 - [ ] classe fonction d'activation pour les fonctions entrainable (PReLU)
-- [ ] mutation aléatoir
+- [x] mutation aléatoir
+- [ ] mutation entre 2 réseaux
 - [ ] mutation avec backpropagation
 - [ ] training class

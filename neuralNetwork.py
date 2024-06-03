@@ -2,10 +2,13 @@ from collections.abc import Iterable, Callable
 import numpy as np
 import pickle
 import activationFunctions as actFn
+from overload import overload
+from copy import deepcopy
 
 class NeuralNetwork:
     
-    def __init__(self, nbInput, nbOutput, weightRange=(-0.5, 0.5), biasRange=(-1, 1), outputFunction=actFn.sigmoidRelu) -> None:
+    @overload
+    def __init__(self, nbInput:int, nbOutput:int, weightRange:tuple=(-1.0, 1.0), biasRange:tuple=(-5.0, 5.0), outputFunction:Callable=actFn.sigmoidRelu) -> None:
         """
         The __init__ function initializes the neural network with a number of inputs, outputs, and an output function.
         It also sets the weight range and bias range to default values if none are given.
@@ -26,14 +29,48 @@ class NeuralNetwork:
         self.biasRange = biasRange
         self.functions = [outputFunction]
         self.layers = [nbInput, nbOutput]
-        self.nbLayer = 2
         weight, bias = self.makeLayer(nbInput, nbOutput)
         self.weights = [weight]
         self.biases = [bias]
     
+    @__init__.add
+    def __init__(self, layers:Iterable, functions:Iterable, weightRange:tuple, biasRange:tuple) -> None:
+        self.weights = []
+        self.biases = []
+        self.layers = layers
+        self.functions = functions
+        self.weightRange = weightRange
+        self.biasRange = biasRange
+        for i in range(len(layers) - 1):
+            weight, bias = self.makeLayer(layers[i], layers[i+1])
+            self.weights.append(weight)
+            self.biases.append(bias)
+    
+    # @__init__.add
+    # def __init__(self, weights:Iterable, biases:Iterable, functions:Iterable, weightRange:tuple, biasRange:tuple) -> None:
+    #     self.weightRange = weightRange
+    #     self.biasRange = biasRange
+    #     self.weights = [np.array(i) for i in weights]
+    #     self.biases = [np.array(i) for i in biases]
+    #     self.functions = functions
+    #     self.layers = [weight.shape[0] for weight in weights]
+    #     self.layers.append(weights[-1].shape[1])
+    
     @property
     def inputSize(self):
         return self.layers[0]
+    
+    @property
+    def outputSize(self):
+        return self.layers[-1]
+    
+    @property
+    def nbLayer(self):
+        return len(self.layers)
+    
+    @property
+    def copy(self):
+        return deepcopy(self)
     
     def addLayer(self, nbNode, function=actFn.relu) -> None:
         """
@@ -56,7 +93,6 @@ class NeuralNetwork:
         self.biases.append(bias2)
         self.layers.insert(-1, nbNode)
         self.functions.insert(-1, function)
-        self.nbLayer += 1
     
     def makeLayer(self, nbInput, nbOutput) -> None:
         """
@@ -93,7 +129,7 @@ class NeuralNetwork:
             inputs = np.array(inputs)
 
         for i in range(self.nbLayer - 1):
-            layerSize = self.layers[i+1]
+            # layerSize = self.layers[i+1]
             weight = self.weights[i]
             bias = self.biases[i]
             function = self.functions[i]
