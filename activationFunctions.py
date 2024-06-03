@@ -1,16 +1,20 @@
 import math
+import numpy as np
 
 def indently(x: float) -> float:
     return x
 
 def binaryStep(x: float) -> float:
-    return 0.0 if x < 0 else 1
+    return 0.0 if x <= 0 else 1
 
 def sigmoid(x: float) -> float:
     return 1 / (1 + math.exp(-x))
 
 def tanh(x: float) -> float:
-    return (math.exp(x) - math.exp(-x)) / (math.exp(x) + math.exp(-x))
+    try:
+        return (math.exp(x) - math.exp(-x)) / (math.exp(x) + math.exp(-x))
+    except:
+        return 1.0
 
 def smht(x: float) -> float:
     a, b, c, d = 1, 2, 3, 4
@@ -23,7 +27,10 @@ def gelu(x: float) -> float:
     return (1 / 2) * x * (1 + math.erf(x / math.sqrt(2)))
 
 def softplus(x: float) -> float:
-    return math.log(1 + math.exp(x))
+    try:
+        return math.log(1 + math.exp(x))
+    except Exception as e:
+        return x
 
 def selu(x: float) -> float:
     a = 1.67326
@@ -51,7 +58,7 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from numpy import linspace, average
     for function in  activationFunctions:
-        inputs = linspace(-5, 5, 10_000)
+        inputs = linspace(-5, 1000, 10_000)
         outputs = list(map(function, inputs))
         plt.plot(inputs, outputs)
         plt.title(function.__name__)

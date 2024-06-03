@@ -1,8 +1,9 @@
 from node import Node
-from activationFunctions import gelu, indently
+from activationFunctions import relu, gelu, indently, softplus
 
 from random import uniform, random
 import math
+import neuronalNetwork
 
 # myNode = Node(gelu, random())
 # data = list(uniform(-100, 100) for _ in range(10))
@@ -12,4 +13,10 @@ import math
 
 # print(Node.loadString("indently,1.93279").activate(*(uniform(-100, 100) for _ in range(1000))))
 
-print(math.sqrt(784))
+# print(math.sqrt(784))
+
+net = neuronalNetwork.NeuronalNetwork(10, 2)
+net.addLayer(50, gelu)
+net.addLayer(100, relu)
+net.addLayer(25, softplus)
+print(net.calcul(1, 0, 0, 0, 0, 0, 0, 0, 0, 0))

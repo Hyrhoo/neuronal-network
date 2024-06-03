@@ -1,4 +1,4 @@
-# neronal-network
+# neuronal-network
 
 ## vidéos aide :
 [vidéo 1 how neronal network works](https://www.youtube.com/watch?v=aircAruvnKk)  
