@@ -1,10 +1,10 @@
-from node import Node
 from activationFunctions import *
-
+import neuralNetwork as nNet
 from random import uniform, random
-import neuronalNetwork
+import pickle
 
-import keras
+# import keras
+# (train_X, train_y), (test_X, test_y) = keras.datasets.mnist.load_data()
 
 # import tensorflow as tf
 # print(tf.contrib.learn)
@@ -13,28 +13,39 @@ import keras
 # print(digits["DESCR"])
 
 
-# myNode = Node(gelu, random())
-# data = list(uniform(-100, 100) for _ in range(10))
-# print(myNode.activate(*data))
-# myNode.activationFunction = indently
-# print(myNode.activate(*data))
+def showData(net: nNet.NeuralNetwork):
+    nbweights = 0
+    nbbiases = 0
+    for weights in net.weights:
+        shape = weights.shape
+        nbweights += shape[0] * shape[1]
 
-# print(Node.loadString("indently,1.93279").activate(*(uniform(-100, 100) for _ in range(1000))))
+    for biases in net.biases:
+        nbbiases += biases.shape[0]
+
+    print(nbbiases, nbweights)
 
 
-net = neuronalNetwork.NeuronalNetwork(728, 10, sigmoid)
+net = nNet.NeuralNetwork(728, 10)
 net.addLayer(16, relu)
 net.addLayer(16, relu)
+# net = neuralNetwork.NeuralNetwork.loadB("saveData/net.pkl")
+# net = neuralNetwork.NeuralNetwork.load("saveData/net.pkl")
 
-nbweights = 0
-nbbiases = 0
-for weights in net.weights:
-    shape = weights.shape
-    nbweights += shape[0] * shape[1]
+showData(net)
+datas = [random() for _ in range(net.inputSize)]
+print(net.calcul(datas))
 
-for biases in net.biases:
-    nbbiases += biases.shape[0]
+# net.save("dataSave/net.pkl")
+# net.saveB("dataSave/net.pkl")
 
-print(nbbiases, nbweights)
 
-print(net.calcul([random() for i in range(728)]))
+
+
+
+
+
+
+
+
+

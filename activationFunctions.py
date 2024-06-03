@@ -1,5 +1,4 @@
 import math
-import numpy as np
 
 def indently(x: float) -> float:
     return x

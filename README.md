@@ -8,11 +8,10 @@
 
 
 ## todo :
-- [ ] connection avec poid and bias
-- [ ] connection layer = matrice (ligne = last layer -> node)
-- [ ] node activation = sortie node
-- [ ] fonction d'activation par layer
-- [ ] input / output layer
-- [ ] très certainement d'aurte trucs
+- [x] connection avec poid and bias
+- [x] connection layer = matrice (ligne = last layer -> node) (inverser pour plus de facilité de calcule)
+- [x] fonction d'activation par layer
 - [ ] score réseau = sum tout les écart entre atendu et donner pour tout les entrés
 - [ ] classe fonction d'activation pour les fonctions entrainable (PReLU)
+- [ ] mutation aléatoir
+- [ ] mutation avec backpropagation
