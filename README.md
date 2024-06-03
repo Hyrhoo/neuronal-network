@@ -17,3 +17,4 @@ dans ce projet je fait un réseau de nerone que je vais ensuite essayer d'entrai
 - [ ] classe fonction d'activation pour les fonctions entrainable (PReLU)
 - [ ] mutation aléatoir
 - [ ] mutation avec backpropagation
+- [ ] training class
