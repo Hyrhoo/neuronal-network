@@ -1,4 +1,6 @@
 # neuronal-network
+dans ce projet je fait un réseau de nerone que je vais ensuite essayer d'entrainer pour reconnaitre des nombre écrit à la main
+
 
 ## vidéos aide :
 [vidéo 1 how neronal network works](https://www.youtube.com/watch?v=aircAruvnKk)  
